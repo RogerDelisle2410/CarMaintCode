@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CarMaint.Models.MaintenanceType>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Type of Maintenance</h2>
+<head>
+    <style type="text/css">
+        table {
+            width: 90%;
+            table-layout: fixed;
+            /*border-collapse: collapse;*/
+        }
+
+        td {
+            border: 1px solid black;
+        }
+
+        .scrollingTable {
+            width: 1150px;
+            overflow-y: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function makeTableScroll() {
+            var maxRows = 8;
+
+            var table = document.getElementById('myTable');
+            var wrapper = table.parentNode;
+            var rowsInTable = table.rows.length;
+            var height = 0;
+            if (rowsInTable > maxRows) {
+                for (var i = 0; i < maxRows; i++) {
+                    height += table.rows[i].clientHeight;
+                }
+                wrapper.style.height = height + "px";
+            }
+        }
+    </script>
+
+</head>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<body>
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskName)
+            </th>
+            <th  style="text-align: right; vertical-align: middle;">
+                @Html.DisplayNameFor(model => model.Cost)                
+            </th>
+            <th style="text-align: center; vertical-align: middle;">
+                @Html.DisplayNameFor(model => model.Gas)
+            </th>
+            <th style="text-align: center; vertical-align: middle;">
+                @Html.DisplayNameFor(model => model.Diesel)
+            </th>
+            <th style="text-align: center; vertical-align: middle;">
+                @Html.DisplayNameFor(model => model.Electric)
+            </th>
+            <th></th>
+        </tr>
+    </table>
+</body>
+
+<body onload="makeTableScroll();">
+    <div class="scrollingTable">
+        <table id="myTable" class="table">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaskName)
+                    </td>
+                    <td style="text-align: right; vertical-align: middle;">
+                        @*@Html.DisplayFor(modelItem => item.Cost)*@
+                        @string.Format("{0:c}", Convert.ToDecimal(item.Cost))                        
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        @Html.DisplayFor(modelItem => item.Gas)
+                    </td >
+                    <td style="text-align: center; vertical-align: middle;">
+                        @Html.DisplayFor(modelItem => item.Diesel)
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        @Html.DisplayFor(modelItem => item.Electric)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MaintId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MaintId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MaintId })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>

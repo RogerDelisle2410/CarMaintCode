@@ -1,0 +1,58 @@
+﻿@model CarMaint.Models.MaintenanceHistory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Maintenance History</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaintenanceType.TaskName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaintenanceType.TaskName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerData.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerData.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarData.Manufacturer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarData.Manufacturer)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HistoryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

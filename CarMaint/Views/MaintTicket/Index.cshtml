@@ -1,0 +1,124 @@
+﻿
+@model IEnumerable<CarMaint.Models.CustomerData>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Maintenance Ticket</h2>
+<h4>Select Customer</h4>
+
+@using (Html.BeginForm())
+{
+    <p>
+        <br />
+        Find by Customer Name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<head>
+    <style type="text/css">
+        table {
+            width: 90%;
+            table-layout: fixed;
+            /*border-collapse: collapse;*/
+        }
+
+        td {
+            border: 1px solid black;
+        }
+
+        .scrollingTable {
+            width: 1150px;
+            overflow-y: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function makeTableScroll() {
+            var maxRows = 8;
+
+            var table = document.getElementById('myTable');
+            var wrapper = table.parentNode;
+            var rowsInTable = table.rows.length;
+            var height = 0;
+            if (rowsInTable > maxRows) {
+                for (var i = 0; i < maxRows; i++) {
+                    height += table.rows[i].clientHeight;
+                }
+                wrapper.style.height = height + "px";
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <br />
+    <table id="myTable2" class="table">
+        <tr>
+            @*<th width="150px">
+                Id
+            </th>*@
+            <th width="150px">
+                Name
+            </th>
+            <th width="150px">
+                Address
+            </th>
+            <th width="150px">
+                City
+            </th>
+            <th width="150px">
+                Postal Code
+            </th>
+            <th width="150px">
+                Phone Number
+            </th>
+            <th width="150px">
+                Select Customer
+            </th>
+
+
+        </tr>
+    </table>
+</body>
+<body onload="makeTableScroll();">
+    <div class="scrollingTable">
+        <table id="myTable" class="table">          
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.CustomerId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostalCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Select", "Select", new { id = item.CustomerId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</body>
+
+
+
+

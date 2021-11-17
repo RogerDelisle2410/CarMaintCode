@@ -1,0 +1,125 @@
+﻿@model IEnumerable<CarMaint.Models.CarData> 
+
+@{
+    ViewBag.Title = "SelectCust";
+}
+<h2>Maintenance Ticket</h2>
+<h4>Select Vehicle to Maintain</h4>
+
+
+
+<head>
+    <style type="text/css">
+        table {
+            width: 90%;
+            table-layout: fixed;
+            /*border-collapse: collapse;*/
+        }
+
+        td {
+            border: 1px solid black;
+        }
+
+        .scrollingTable {
+            width: 1150px;
+            overflow-y: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function makeTableScroll() {
+            var maxRows = 8;
+
+            var table = document.getElementById('myTable');
+            var wrapper = table.parentNode;
+            var rowsInTable = table.rows.length;
+            var height = 0;
+            if (rowsInTable > maxRows) {
+                for (var i = 0; i < maxRows; i++) {
+                    height += table.rows[i].clientHeight;
+                }
+                wrapper.style.height = height + "px";
+            }
+        }
+    </script>
+
+</head>
+
+
+<body>
+
+    <br />
+    <table id="myTable2" class="table">
+        <tr>
+            <th width="150px">
+                Customer
+            </th> 
+        <tr>
+            <td>
+                @Session["CustomerName"].ToString() 
+            </td>
+        </tr> 
+    </table>
+</body>
+
+<body>
+
+    <br />
+    <table id="myTable2" class="table">
+        <tr>
+            @*<th width="150px">
+                CarId              
+            </th>*@
+            <th width="150px">
+                Manufacturer               
+            </th>
+            <th width="150px">
+                Model                
+            </th>
+            <th width="150px">
+                Engine Type              
+            </th>
+            <th width="150px">
+                Year              
+            </th>
+
+            <th width="150px">
+                Select Vehicle              
+            </th>
+        </tr>
+    </table>
+</body>
+<body onload="makeTableScroll();">
+    <div class="scrollingTable">
+        <table id="myTable" class="table">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.CarId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EngineType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Select Car", "SelectCar", new { engineType = item.EngineType, carId = item.CarId }) 
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</body>
+
+
+
+

@@ -1,0 +1,308 @@
+﻿@model IEnumerable<CarMaint.Models.MaintenanceType>
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Maintenance Ticket</h2>
+<h4>Select Type of Maintenance Required</h4>
+
+<head>
+    <style type="text/css">
+        td {
+            border: 1px solid black;
+        }
+
+        .scrollingTable {
+            width: 50%;
+            overflow-y: auto;
+        }
+
+        tr.noBorder td {
+            border: 1px solid red;
+        }
+        /*#myTable{
+            border: 1px solid red;
+        }*/
+    </style>
+    <script src="//code.jquery.com/jquery-3.1.0.slim.min.js"></script>
+    <script src="sumTable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript">
+        var orderArray = [];
+        var mycars = new Array();
+        var sumArray = [];
+        var totalArray = [];
+        var sumTotal = 0;
+
+        $(document).ready(function () {
+            $('input:checkbox').prop('checked', false);
+        });
+
+        function makeTableScroll() {
+            var maxRows = 7;
+
+            var table = document.getElementById('myTable5');
+
+            var wrapper = table.parentNode;
+            var rowsInTable = table.rows.length;
+            var height = 0;
+            if (rowsInTable > maxRows) {
+                for (var i = 0; i < maxRows; i++) {
+                    height += table.rows[i].clientHeight;
+                }
+                wrapper.style.height = height + "px";
+            }
+        }
+
+        function getRow(n) {
+            var row = n.parentNode.parentNode;
+            var cols = row.getElementsByTagName("td");
+
+            var maintid = parseInt(cols[0].childNodes[0].nodeValue);
+
+            var idx = $.inArray(maintid, orderArray)
+            
+            if (idx == -1) {
+                orderArray.push(maintid)
+                document.getElementById("HeaderTable").hidden = "";
+                document.getElementById("theButton").hidden = "";
+                var table = document.getElementById("MainTable");
+                table.hidden = "";
+                var row = table.insertRow(0);
+                row.style.border = "none";
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                cell2.innerHTML = (cols[0].childNodes[0].nodeValue);
+                cell3.innerHTML = (cols[1].childNodes[0].nodeValue);
+                var num2 = (cols[2].childNodes[0].nodeValue);
+                cell4.innerHTML = parseFloat(num2).toFixed(2);
+                
+                var sum = 0;
+                var dataTable = document.getElementById("MainTable");
+                var cells = dataTable.querySelectorAll("td + td + td + td");
+                for (var i = 0; i < cells.length - 1; i++) {
+                    sum += parseFloat(cells[i].firstChild.data);
+                }
+                var tableFoot = document.getElementById("TableFooter");
+                tableFoot.hidden = "";
+                var tableTotal = document.getElementById("aTotal");
+                tableTotal.innerHTML = sum.toFixed(2);
+            }
+            else { 
+                orderArray.splice(idx, 1);
+                var table = document.getElementById("MainTable");
+                var cells = table.getElementsByTagName("TD");
+                for (var x = 0; x < cells.length; x++) {
+                    if (!cells[x].firstChild) {
+                        continue;
+                    }
+                    if (cells[x].firstChild.nodeValue == maintid) {
+                        var row = cells[x].parentNode;
+                        row.parentNode.removeChild(row);
+                        break;
+                    }
+                }
+                
+                var sum = 0;
+                var dataTable = document.getElementById("MainTable");
+                var cells = dataTable.querySelectorAll("td + td + td + td");
+                for (var i = 0; i < cells.length - 1; i++) {
+                    sum += parseFloat(cells[i].firstChild.data);
+                }
+                var tableFoot = document.getElementById("TableFooter");
+                tableFoot.hidden = "";
+                var tableTotal = document.getElementById("aTotal");
+                tableTotal.innerHTML = sum.toFixed(2);
+
+                if (orderArray.length == 0) {
+                    document.getElementById("HeaderTable").hidden = "hidden";
+                    document.getElementById("MainTable").hidden = "hidden";
+                    document.getElementById("TableFooter").hidden = "hidden";
+                    document.getElementById("theButton").hidden = "hidden";
+                }
+            }
+        }
+
+        //function sumTotal() {
+        //    alert('in3');
+        //    var sum = 0; 
+        //    var dataTable = document.getElementById("MainTable");
+        //    var cells = dataTable.querySelectorAll("td + td + td + td");
+        //    for (var i = 0; i < cells.length - 1; i++) {
+        //        sum += parseFloat(cells[i].firstChild.data);
+        //        alert(sum);
+        //    }
+        //    var tableFoot = document.getElementById("TableFooter");
+        //    tableFoot.hidden = "";
+        //    var tableTotal = document.getElementById("aTotal");
+        //    tableTotal.innerHTML = sum.toFixed(2);
+
+        //    if (orderArray.length == 0) {
+        //        document.getElementById("HeaderTable").hidden = "hidden";
+        //        document.getElementById("MainTable").hidden = "hidden";
+        //        document.getElementById("TableFooter").hidden = "hidden";
+        //    }
+        //}
+
+        function proceed() {
+
+            if (orderArray.length > 0) {
+
+                $.ajax({
+                    type: "POST",
+                    traditional: true,
+                    url: "AddToHistory",
+                    async: false,
+                    data: { 'arrayOfValues': orderArray },
+                    dataType: "json",
+                    success: function (json) {
+                        alert("The Maintenance History has been updated");
+                        if (json.isRedirect) {
+                            window.location.href = json.redirectUrl;
+                        }
+                    },
+
+                    error: function (args) {
+                        alert("Error on ajax post" + orderArray);
+                    }
+                });
+
+                $(document).ready(function () {
+                    $('input:checkbox').prop('checked', false);
+                });
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+    <br />
+    <table id="myTable1" class="table col-lg-12">
+        <tr>
+            <th class="col-lg-2">
+                Customer
+            </th>
+            <th class="col-lg-2">
+                Manufacturer
+            </th>
+            <th class="col-lg-2">
+                Model
+            </th>
+            <th class="col-lg-2">
+                Engine Type
+            </th>
+            <th class="col-lg-1">
+                Year
+            </th>
+            <th class="col-lg-3" style="background-color:white">
+            </th>
+        <tr style="background-color:white">
+
+            <td class="col-lg-2">
+                @Session["CustomerName"].ToString()
+            </td>
+            <td class="col-lg-2">
+                @Session["Manufacturer"].ToString()
+            </td>
+            <td class="col-lg-2">
+                @Session["Model"].ToString()
+            </td>
+            <td class="col-lg-2">
+                @Session["EngineType"].ToString()
+            </td>
+            <td class="col-lg-1">
+                @Session["Year"].ToString()
+            </td>
+            <th class="col-lg-4" style="background-color:white"></th>
+        </tr>
+    </table>
+</body>
+
+<body>
+    <div>
+        <table class="table col-lg-12">
+            <tr>
+                <th class="col-lg-1">
+                    Maint ID
+                </th>
+                <th class="col-lg-3">
+                    Task Name
+                </th>
+                <th class="col-lg-1" style="text-align: right; vertical-align: middle;">
+                    Cost
+                </th>
+                <th class="col-lg-1" style="text-align: center; vertical-align: middle;">
+                    Select
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th class="col-lg-2">
+                    <input type="button" id="theButton" value="Create Ticket" onclick="proceed()" style="text-align: right; vertical-align: middle; " hidden="hidden;" />
+                </th>
+            </tr>
+        </table>
+    </div>
+
+</body>
+<body onload="makeTableScroll();">
+    <div class="scrollingTable" style="clear:both; float: left; width: 50%">
+        <table id="myTable5" class="table col-lg-12">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="col-lg-1" style="text-align: center; vertical-align: middle;">
+                        @Html.DisplayFor(modelItem => item.MaintId)
+                    </td>
+                    <td class="col-lg-2">
+                        @Html.DisplayFor(modelItem => item.TaskName)
+                    </td>
+
+                    <td class="col-lg-1" style="text-align: right; vertical-align: middle;">
+                        @string.Format("{0:0.00}", Convert.ToDecimal(item.Cost))
+                        @*@string.Format("{0:c}", Convert.ToDecimal(item.Cost))*@
+
+                    </td>
+                    <td class="col-lg-1" style="text-align: center; vertical-align: middle;">
+                        <input type="checkbox" name="test" value="1" onclick="getRow(this)" />   <br />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+<body>
+    <div style="float: left; width: 50%">
+        <table id="HeaderTable" style="text-align: right; border:none" hidden="hidden">
+            <tr>
+                <td width="100px" style="border:none"></td>
+                <td width="100px" style="border:none">Maint Id</td>
+                <td width="300px" style="border:none">Type</td>
+                <td width="100px" style="border:none">Cost</td>
+            </tr>
+        </table>
+        <table id="MainTable" style="text-align: right; border:none" hidden="hidden">
+            <tr class="itemRow row-0 odd" id="cartItem_SCI-1">
+                <td width="100px" style="border:none"></td>
+                <td width="100px" style="border:none"></td>
+                <td class="itemWork" width="300px" style="border:none"></td>
+                <td class="itemPrice" width="100px" style="border:none"></td>
+            </tr>
+        </table>
+
+        <table id="TableFooter" style="text-align: right; border:none" hidden="hidden">
+            <tr>
+                <td width="500px" style="border:none;text-align: right;">Total: $</td>
+                <td id="aTotal" width="100px" class="someTotalPrice" style="text-align: right; border:none"></td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="myDiv"></div>
+</body>  

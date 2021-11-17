@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BCATPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BCATPModelStoreContainer">
+    <EntitySet Name="CustomerDatas" EntityType="BCATPModel.Store.CustomerDatas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MaintenanceHistories" EntityType="BCATPModel.Store.MaintenanceHistories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MaintenanceTypes" EntityType="BCATPModel.Store.MaintenanceTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CarDatas" EntityType="BCATPModel.Store.CarDatas" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_MaintenanceHistory_MaintenanceType" Association="BCATPModel.Store.FK_MaintenanceHistory_MaintenanceType">
+      <End Role="MaintenanceType" EntitySet="MaintenanceTypes" />
+      <End Role="MaintenanceHistory" EntitySet="MaintenanceHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MaintenanceHistory_CustomerData" Association="BCATPModel.Store.FK_MaintenanceHistory_CustomerData">
+      <End Role="CustomerData" EntitySet="CustomerDatas" />
+      <End Role="MaintenanceHistory" EntitySet="MaintenanceHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarData_CustomerData" Association="BCATPModel.Store.FK_CarData_CustomerData">
+      <End Role="CustomerData" EntitySet="CustomerDatas" />
+      <End Role="CarData" EntitySet="CarDatas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MaintenanceHistory_CarData" Association="BCATPModel.Store.FK_MaintenanceHistory_CarData">
+      <End Role="CarData" EntitySet="CarDatas" />
+      <End Role="MaintenanceHistory" EntitySet="MaintenanceHistories" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CustomerDatas">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="PostalCode" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="Phone" Type="nvarchar" Nullable="true" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="MaintenanceHistories">
+    <Key>
+      <PropertyRef Name="HistoryId" />
+    </Key>
+    <Property Name="HistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarId" Type="int" Nullable="false" />
+    <Property Name="MaintId" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="decimal" Nullable="true" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="MaintenanceTypes">
+    <Key>
+      <PropertyRef Name="MaintId" />
+    </Key>
+    <Property Name="MaintId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaskName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Cost" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Gas" Type="bit" Nullable="false" />
+    <Property Name="Diesel" Type="bit" Nullable="false" />
+    <Property Name="Electric" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarDatas">
+    <Key>
+      <PropertyRef Name="CarId" />
+    </Key>
+    <Property Name="CarId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="Manufacturer" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Model" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Year" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="EngineType" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Mileage" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_MaintenanceHistory_MaintenanceType">
+    <End Role="MaintenanceType" Type="BCATPModel.Store.MaintenanceTypes" Multiplicity="1" />
+    <End Role="MaintenanceHistory" Type="BCATPModel.Store.MaintenanceHistories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaintenanceType">
+        <PropertyRef Name="MaintId" />
+      </Principal>
+      <Dependent Role="MaintenanceHistory">
+        <PropertyRef Name="MaintId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MaintenanceHistory_CustomerData">
+    <End Role="CustomerData" Type="BCATPModel.Store.CustomerDatas" Multiplicity="1" />
+    <End Role="MaintenanceHistory" Type="BCATPModel.Store.MaintenanceHistories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerData">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="MaintenanceHistory">
+        <PropertyRef Name="CustId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarData_CustomerData">
+    <End Role="CustomerData" Type="BCATPModel.Store.CustomerDatas" Multiplicity="1" />
+    <End Role="CarData" Type="BCATPModel.Store.CarDatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerData">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="CarData">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MaintenanceHistory_CarData">
+    <End Role="CarData" Type="BCATPModel.Store.CarDatas" Multiplicity="1" />
+    <End Role="MaintenanceHistory" Type="BCATPModel.Store.MaintenanceHistories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarData">
+        <PropertyRef Name="CarId" />
+      </Principal>
+      <Dependent Role="MaintenanceHistory">
+        <PropertyRef Name="CarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BCATPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerData">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MaintenanceHistories" Relationship="BCATPModel.FK_MaintenanceHistory_CustomerData" FromRole="CustomerData" ToRole="MaintenanceHistory" />
+          <NavigationProperty Name="CarDatas" Relationship="BCATPModel.FK_CarData_CustomerData" FromRole="CustomerData" ToRole="CarData" />
+        </EntityType>
+        <EntityType Name="MaintenanceHistory">
+          <Key>
+            <PropertyRef Name="HistoryId" />
+          </Key>
+          <Property Name="HistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="MaintId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MaintenanceType" Relationship="Self.FK_MaintenanceHistory_MaintenanceType" FromRole="MaintenanceHistory" ToRole="MaintenanceType" />
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomerData" Relationship="BCATPModel.FK_MaintenanceHistory_CustomerData" FromRole="MaintenanceHistory" ToRole="CustomerData" />
+          <NavigationProperty Name="CarData" Relationship="BCATPModel.FK_MaintenanceHistory_CarData" FromRole="MaintenanceHistory" ToRole="CarData" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="MaintenanceType">
+          <Key>
+            <PropertyRef Name="MaintId" />
+          </Key>
+          <Property Name="MaintId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gas" Type="Boolean" Nullable="false" />
+          <Property Name="Diesel" Type="Boolean" Nullable="false" />
+          <Property Name="Electric" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MaintenanceHistories" Relationship="Self.FK_MaintenanceHistory_MaintenanceType" FromRole="MaintenanceType" ToRole="MaintenanceHistory" />
+        </EntityType>
+        <Association Name="FK_MaintenanceHistory_MaintenanceType">
+          <End Role="MaintenanceType" Type="Self.MaintenanceType" Multiplicity="1" />
+          <End Role="MaintenanceHistory" Type="Self.MaintenanceHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaintenanceType">
+              <PropertyRef Name="MaintId" />
+            </Principal>
+            <Dependent Role="MaintenanceHistory">
+              <PropertyRef Name="MaintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BCATPEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerDatas" EntityType="Self.CustomerData" />
+          <EntitySet Name="MaintenanceHistories" EntityType="Self.MaintenanceHistory" />
+          <EntitySet Name="MaintenanceTypes" EntityType="Self.MaintenanceType" />
+          <AssociationSet Name="FK_MaintenanceHistory_MaintenanceType" Association="Self.FK_MaintenanceHistory_MaintenanceType">
+            <End Role="MaintenanceType" EntitySet="MaintenanceTypes" />
+            <End Role="MaintenanceHistory" EntitySet="MaintenanceHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaintenanceHistory_CustomerData" Association="BCATPModel.FK_MaintenanceHistory_CustomerData">
+            <End Role="CustomerData" EntitySet="CustomerDatas" />
+            <End Role="MaintenanceHistory" EntitySet="MaintenanceHistories" />
+          </AssociationSet>
+          <EntitySet Name="CarDatas" EntityType="BCATPModel.CarData" />
+          <AssociationSet Name="FK_CarData_CustomerData" Association="BCATPModel.FK_CarData_CustomerData">
+            <End Role="CustomerData" EntitySet="CustomerDatas" />
+            <End Role="CarData" EntitySet="CarDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaintenanceHistory_CarData" Association="BCATPModel.FK_MaintenanceHistory_CarData">
+            <End Role="CarData" EntitySet="CarDatas" />
+            <End Role="MaintenanceHistory" EntitySet="MaintenanceHistories" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_MaintenanceHistory_CustomerData">
+          <End Type="BCATPModel.CustomerData" Role="CustomerData" Multiplicity="1" />
+          <End Type="BCATPModel.MaintenanceHistory" Role="MaintenanceHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerData">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="MaintenanceHistory">
+              <PropertyRef Name="CustId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CarData">
+          <Key>
+            <PropertyRef Name="CarId" />
+          </Key>
+          <Property Name="CarId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EngineType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mileage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerData" Relationship="BCATPModel.FK_CarData_CustomerData" FromRole="CarData" ToRole="CustomerData" />
+          <NavigationProperty Name="MaintenanceHistories" Relationship="BCATPModel.FK_MaintenanceHistory_CarData" FromRole="CarData" ToRole="MaintenanceHistory" />
+        </EntityType>
+        <Association Name="FK_CarData_CustomerData">
+          <End Type="BCATPModel.CustomerData" Role="CustomerData" Multiplicity="1" />
+          <End Type="BCATPModel.CarData" Role="CarData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerData">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CarData">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaintenanceHistory_CarData">
+          <End Type="BCATPModel.CarData" Role="CarData" Multiplicity="1" />
+          <End Type="BCATPModel.MaintenanceHistory" Role="MaintenanceHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarData">
+              <PropertyRef Name="CarId" />
+            </Principal>
+            <Dependent Role="MaintenanceHistory">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BCATPModelStoreContainer" CdmEntityContainer="BCATPEntities1">
+    <EntitySetMapping Name="CustomerDatas">
+      <EntityTypeMapping TypeName="IsTypeOf(BCATPModel.CustomerData)">
+        <MappingFragment StoreEntitySet="CustomerDatas">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MaintenanceHistories">
+      <EntityTypeMapping TypeName="IsTypeOf(BCATPModel.MaintenanceHistory)">
+        <MappingFragment StoreEntitySet="MaintenanceHistories">
+          <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+          <ScalarProperty Name="MaintId" ColumnName="MaintId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CustId" ColumnName="CustId" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MaintenanceTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(BCATPModel.MaintenanceType)">
+        <MappingFragment StoreEntitySet="MaintenanceTypes">
+          <ScalarProperty Name="MaintId" ColumnName="MaintId" />
+          <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Gas" ColumnName="Gas" />
+          <ScalarProperty Name="Diesel" ColumnName="Diesel" />
+          <ScalarProperty Name="Electric" ColumnName="Electric" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarDatas">
+      <EntityTypeMapping TypeName="IsTypeOf(BCATPModel.CarData)">
+        <MappingFragment StoreEntitySet="CarDatas">
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="EngineType" ColumnName="EngineType" />
+          <ScalarProperty Name="Mileage" ColumnName="Mileage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
