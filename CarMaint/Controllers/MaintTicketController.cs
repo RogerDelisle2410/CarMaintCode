@@ -12,7 +12,7 @@ namespace CarMaint.Controllers
 {
     public class MaintTicketController : Controller
     {
-        private BCATPEntities1 db = new BCATPEntities1();
+        private readonly BCATPEntities1 db = new BCATPEntities1();
         public decimal theCost;
         public int maId;
 
@@ -120,6 +120,3 @@ namespace CarMaint.Controllers
     }
 }
 
-       
- 
- 

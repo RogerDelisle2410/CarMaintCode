@@ -12,7 +12,7 @@ namespace CarMaint.Controllers
 {
     public class MaintenanceTypesController : Controller
     {
-        private BCATPEntities1 db = new BCATPEntities1();
+        private readonly BCATPEntities1 db = new BCATPEntities1();
 
         // GET: MaintenanceTypes
         public ActionResult Index()

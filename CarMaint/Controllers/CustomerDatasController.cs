@@ -12,10 +12,10 @@ namespace CarMaint.Controllers
 {
     public class CustomerDatasController : Controller
     {
-        private BCATPEntities1 db = new BCATPEntities1();
+        private readonly BCATPEntities1 db = new BCATPEntities1();
 
         // GET: CustomerDatas
-        
+
         public ActionResult Index(string searchString)
         {
             var customerData = from s in db.CustomerDatas
@@ -25,7 +25,7 @@ namespace CarMaint.Controllers
                 customerData = customerData.Where(s => s.Name.Contains(searchString));
             }
             return View(customerData.ToList().OrderBy(t => t.Name));
-        } 
+        }
 
         // GET: CustomerDatas/Details/5
         public ActionResult Details(int? id)

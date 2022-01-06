@@ -12,7 +12,7 @@ namespace CarMaint.Controllers
 {
     public class CarDatasController : Controller
     {
-        private BCATPEntities1 db = new BCATPEntities1();
+        private readonly BCATPEntities1 db = new BCATPEntities1();
 
         // GET: CarDatas
         public ActionResult Index(string searchString)

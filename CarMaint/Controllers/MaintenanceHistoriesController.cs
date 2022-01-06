@@ -12,7 +12,7 @@ namespace CarMaint.Controllers
 {
     public class MaintenanceHistoriesController : Controller
     {
-        private BCATPEntities1 db = new BCATPEntities1();
+        private readonly BCATPEntities1 db = new BCATPEntities1();
 
         // GET: MaintenanceHistories         
 
@@ -27,7 +27,7 @@ namespace CarMaint.Controllers
             }
             else
             {
-                maintenanceHistories = db.MaintenanceHistories.Include(m => m.MaintenanceType).Include(m => m.CustomerData).Include(m => m.CarData);              
+                maintenanceHistories = db.MaintenanceHistories.Include(m => m.MaintenanceType).Include(m => m.CustomerData).Include(m => m.CarData);
             }
 
             //var totals =
