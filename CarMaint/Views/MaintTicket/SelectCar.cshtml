@@ -61,7 +61,7 @@
             var maintid = parseInt(cols[0].childNodes[0].nodeValue);
 
             var idx = $.inArray(maintid, orderArray)
-            
+
             if (idx == -1) {
                 orderArray.push(maintid)
                 document.getElementById("HeaderTable").hidden = "";
@@ -78,19 +78,20 @@
                 cell3.innerHTML = (cols[1].childNodes[0].nodeValue);
                 var num2 = (cols[2].childNodes[0].nodeValue);
                 cell4.innerHTML = parseFloat(num2).toFixed(2);
-                
+
                 var sum = 0;
                 var dataTable = document.getElementById("MainTable");
                 var cells = dataTable.querySelectorAll("td + td + td + td");
                 for (var i = 0; i < cells.length - 1; i++) {
                     sum += parseFloat(cells[i].firstChild.data);
                 }
+                /*alert('sum1 ' + sum);*/
                 var tableFoot = document.getElementById("TableFooter");
                 tableFoot.hidden = "";
                 var tableTotal = document.getElementById("aTotal");
                 tableTotal.innerHTML = sum.toFixed(2);
             }
-            else { 
+            else {
                 orderArray.splice(idx, 1);
                 var table = document.getElementById("MainTable");
                 var cells = table.getElementsByTagName("TD");
@@ -104,13 +105,14 @@
                         break;
                     }
                 }
-                
+
                 var sum = 0;
                 var dataTable = document.getElementById("MainTable");
                 var cells = dataTable.querySelectorAll("td + td + td + td");
                 for (var i = 0; i < cells.length - 1; i++) {
                     sum += parseFloat(cells[i].firstChild.data);
                 }
+                /*alert('sum2 ' + sum);*/
                 var tableFoot = document.getElementById("TableFooter");
                 tableFoot.hidden = "";
                 var tableTotal = document.getElementById("aTotal");
@@ -127,7 +129,7 @@
 
         //function sumTotal() {
         //    alert('in3');
-        //    var sum = 0; 
+        //    var sum = 0;
         //    var dataTable = document.getElementById("MainTable");
         //    var cells = dataTable.querySelectorAll("td + td + td + td");
         //    for (var i = 0; i < cells.length - 1; i++) {
@@ -179,7 +181,6 @@
 
 </head>
 <body>
-    <br />
     <table id="myTable1" class="table col-lg-12">
         <tr>
             <th class="col-lg-2">
@@ -197,7 +198,7 @@
             <th class="col-lg-1">
                 Year
             </th>
-            <th class="col-lg-3" style="background-color:white">
+            <th class="col-lg-3" style=" border:none">
             </th>
         <tr style="background-color:white">
 
@@ -216,7 +217,7 @@
             <td class="col-lg-1">
                 @Session["Year"].ToString()
             </td>
-            <th class="col-lg-4" style="background-color:white"></th>
+            <th class="col-lg-4" style="border: none"></th>
         </tr>
     </table>
 </body>
@@ -225,35 +226,27 @@
     <div>
         <table class="table col-lg-12">
             <tr>
-                <th class="col-lg-1">
+                <th class="col-lg-1" style="border: none">
                     Maint ID
                 </th>
-                <th class="col-lg-3">
+                <th class="col-lg-3" style="border: none">
                     Task Name
                 </th>
-                <th class="col-lg-1" style="text-align: right; vertical-align: middle;">
+                <th class="col-lg-1" style="border: none">
                     Cost
                 </th>
-                <th class="col-lg-1" style="text-align: center; vertical-align: middle;">
+                <th class="col-lg-1" style="border: none">
                     Select
                 </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th class="col-lg-2">
-                    <input type="button" id="theButton" value="Create Ticket" onclick="proceed()" style="text-align: right; vertical-align: middle; " hidden="hidden;" />
+                <th class="col-lg-6" style="border: none">
                 </th>
             </tr>
         </table>
     </div>
-
 </body>
 <body onload="makeTableScroll();">
-    <div class="scrollingTable" style="clear:both; float: left; width: 50%">
-        <table id="myTable5" class="table col-lg-12">
+    <div class="scrollingTable">
+        <table id="myTable5" class="table col-lg-5" style="border: none">
             @foreach (var item in Model)
             {
                 <tr>
@@ -270,39 +263,60 @@
 
                     </td>
                     <td class="col-lg-1" style="text-align: center; vertical-align: middle;">
-                        <input type="checkbox" name="test" value="1" onclick="getRow(this)" />   <br />
+                        <input type="checkbox" name="test" value="1" onclick="getRow(this)" />
                     </td>
+
                 </tr>
             }
+        </table>
+        <table id=" " class="table col-lg-7">
+        </table>
+
+    </div>
+</body>
+<body>
+    <div>
+        <table id="HeaderTable" class="table col-lg-12">
+            <tr>
+                <th class="col-lg-1" style="border:none"></th>
+                <th class="col-lg-1" style="border:none">Maint Id</th>
+                <th class="col-lg-2" style="border:none">Type</th>
+                <th class="col-lg-1" style="border:none">Cost</th>
+
+                <th class="col-lg-8" style="border: none"></th>
+            </tr>
         </table>
     </div>
 </body>
 <body>
-    <div style="float: left; width: 50%">
-        <table id="HeaderTable" style="text-align: right; border:none" hidden="hidden">
+    <div>
+        <table id="MainTable" class="table col-lg-12">
+            @*<tr class="itemRow row-0 odd" id="cartItem_SCI-1">*@
+            @*<th class="col-lg-1" style="border:none"></th>*@
             <tr>
-                <td width="100px" style="border:none"></td>
-                <td width="100px" style="border:none">Maint Id</td>
-                <td width="300px" style="border:none">Type</td>
-                <td width="100px" style="border:none">Cost</td>
-            </tr>
-        </table>
-        <table id="MainTable" style="text-align: right; border:none" hidden="hidden">
-            <tr class="itemRow row-0 odd" id="cartItem_SCI-1">
-                <td width="100px" style="border:none"></td>
-                <td width="100px" style="border:none"></td>
-                <td class="itemWork" width="300px" style="border:none"></td>
-                <td class="itemPrice" width="100px" style="border:none"></td>
-            </tr>
-        </table>
+                <td class="col-lg-1" style="border:none"></td>
+                <td class="col-lg-1" style="border:none"></td>
+                <td class="itemWork col-lg-2" style="border:none"></td>
+                <td class="itemPrice col-lg-1" style="border: none; text-align: right; vertical-align: middle; "></td>
 
-        <table id="TableFooter" style="text-align: right; border:none" hidden="hidden">
-            <tr>
-                <td width="500px" style="border:none;text-align: right;">Total: $</td>
-                <td id="aTotal" width="100px" class="someTotalPrice" style="text-align: right; border:none"></td>
+                <th class="col-lg-8" style="border: none"></th>
             </tr>
         </table>
-
     </div>
-    <div id="myDiv"></div>
+</body>
+<body>
+    <div>
+        <table id="TableFooter" class="table col-lg-12" style="border: none">
+            <tr>
+                <th class="col-lg-3" style="border: none">
+                <td class="col-lg-1" style="border:none;text-align: right;">Total: $</td>
+                <td id="aTotal" class="col-lg-1 someTotalPrice" style="text-align: left; border:none"></td>
+
+
+                <td class="col-lg-8" style="border: none">
+                    <input type="button" id="theButton" value="Create Ticket" onclick="proceed()" style="text-align: right; vertical-align: middle;   border: none" />
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>  
