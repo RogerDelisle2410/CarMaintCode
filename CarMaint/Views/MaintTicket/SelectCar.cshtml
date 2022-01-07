@@ -19,10 +19,7 @@
 
         tr.noBorder td {
             border: 1px solid red;
-        }
-        /*#myTable{
-            border: 1px solid red;
-        }*/
+        } 
     </style>
     <script src="//code.jquery.com/jquery-3.1.0.slim.min.js"></script>
     <script src="sumTable.js"></script>
@@ -36,9 +33,17 @@
 
         $(document).ready(function () {
             $('input:checkbox').prop('checked', false);
-        });
 
-        function makeTableScroll() {
+            document.getElementById("HeaderTable").hidden = "hidden";
+            document.getElementById("MainTable").hidden = "hidden";
+            document.getElementById("TableFooter").hidden = "hidden";
+            document.getElementById("theButton").hidden = "hidden";
+        });
+         
+               
+             
+        function makeTableScroll() { 
+            
             var maxRows = 7;
 
             var table = document.getElementById('myTable5');
@@ -58,40 +63,47 @@
             var row = n.parentNode.parentNode;
             var cols = row.getElementsByTagName("td");
 
-            var maintid = parseInt(cols[0].childNodes[0].nodeValue);
+            var maintid = parseInt(cols[0].childNodes[0].nodeValue); 
 
             var idx = $.inArray(maintid, orderArray)
 
-            if (idx == -1) {
+            if (idx == -1) { 
                 orderArray.push(maintid)
                 document.getElementById("HeaderTable").hidden = "";
                 document.getElementById("theButton").hidden = "";
                 var table = document.getElementById("MainTable");
                 table.hidden = "";
-                var row = table.insertRow(0);
-                row.style.border = "none";
+                var row = table.insertRow(0); ;
+
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 var cell3 = row.insertCell(2);
-                var cell4 = row.insertCell(3);
+                var cell4 = row.insertCell(3);  
+
                 cell2.innerHTML = (cols[0].childNodes[0].nodeValue);
                 cell3.innerHTML = (cols[1].childNodes[0].nodeValue);
                 var num2 = (cols[2].childNodes[0].nodeValue);
-                cell4.innerHTML = parseFloat(num2).toFixed(2);
+                cell4.innerHTML = parseFloat(num2).toFixed(2); 
+                 
+                
 
                 var sum = 0;
                 var dataTable = document.getElementById("MainTable");
                 var cells = dataTable.querySelectorAll("td + td + td + td");
                 for (var i = 0; i < cells.length - 1; i++) {
-                    sum += parseFloat(cells[i].firstChild.data);
+                    sum += parseFloat(cells[i].firstChild.data); 
                 }
-                /*alert('sum1 ' + sum);*/
+                 
+                cell2.setAttribute('style', 'text-align: center; ');
+                cell4.setAttribute('style', 'text-align: right; ');
+
                 var tableFoot = document.getElementById("TableFooter");
                 tableFoot.hidden = "";
                 var tableTotal = document.getElementById("aTotal");
                 tableTotal.innerHTML = sum.toFixed(2);
+               /* alert('1:' + sum.toFixed(2));*/
             }
-            else {
+            else {               
                 orderArray.splice(idx, 1);
                 var table = document.getElementById("MainTable");
                 var cells = table.getElementsByTagName("TD");
@@ -111,42 +123,20 @@
                 var cells = dataTable.querySelectorAll("td + td + td + td");
                 for (var i = 0; i < cells.length - 1; i++) {
                     sum += parseFloat(cells[i].firstChild.data);
-                }
-                /*alert('sum2 ' + sum);*/
+                } 
                 var tableFoot = document.getElementById("TableFooter");
                 tableFoot.hidden = "";
                 var tableTotal = document.getElementById("aTotal");
                 tableTotal.innerHTML = sum.toFixed(2);
-
-                if (orderArray.length == 0) {
+               /* alert('2 ' + sum.toFixed(2));*/
+                if (orderArray.length == 0) { 
                     document.getElementById("HeaderTable").hidden = "hidden";
                     document.getElementById("MainTable").hidden = "hidden";
                     document.getElementById("TableFooter").hidden = "hidden";
                     document.getElementById("theButton").hidden = "hidden";
                 }
             }
-        }
-
-        //function sumTotal() {
-        //    alert('in3');
-        //    var sum = 0;
-        //    var dataTable = document.getElementById("MainTable");
-        //    var cells = dataTable.querySelectorAll("td + td + td + td");
-        //    for (var i = 0; i < cells.length - 1; i++) {
-        //        sum += parseFloat(cells[i].firstChild.data);
-        //        alert(sum);
-        //    }
-        //    var tableFoot = document.getElementById("TableFooter");
-        //    tableFoot.hidden = "";
-        //    var tableTotal = document.getElementById("aTotal");
-        //    tableTotal.innerHTML = sum.toFixed(2);
-
-        //    if (orderArray.length == 0) {
-        //        document.getElementById("HeaderTable").hidden = "hidden";
-        //        document.getElementById("MainTable").hidden = "hidden";
-        //        document.getElementById("TableFooter").hidden = "hidden";
-        //    }
-        //}
+        } 
 
         function proceed() {
 
@@ -183,137 +173,101 @@
 <body>
     <table id="myTable1" class="table col-lg-12">
         <tr>
-            <th class="col-lg-2">
-                Customer
-            </th>
-            <th class="col-lg-2">
-                Manufacturer
-            </th>
-            <th class="col-lg-2">
-                Model
-            </th>
-            <th class="col-lg-2">
-                Engine Type
-            </th>
-            <th class="col-lg-1">
-                Year
-            </th>
+            <th class="col-lg-2">Customer</th>
+            <th class="col-lg-2">Manufacturer</th>
+            <th class="col-lg-2">Model</th>
+            <th class="col-lg-2">Engine Type</th>
+            <th class="col-lg-1">Year</th>
             <th class="col-lg-3" style=" border:none">
             </th>
         <tr style="background-color:white">
 
-            <td class="col-lg-2">
-                @Session["CustomerName"].ToString()
-            </td>
-            <td class="col-lg-2">
-                @Session["Manufacturer"].ToString()
-            </td>
-            <td class="col-lg-2">
-                @Session["Model"].ToString()
-            </td>
-            <td class="col-lg-2">
-                @Session["EngineType"].ToString()
-            </td>
-            <td class="col-lg-1">
-                @Session["Year"].ToString()
-            </td>
+            <td class="col-lg-2">@Session["CustomerName"].ToString()</td>
+            <td class="col-lg-2">@Session["Manufacturer"].ToString()</td>
+            <td class="col-lg-2">@Session["Model"].ToString()</td>
+            <td class="col-lg-2">@Session["EngineType"].ToString()</td>
+            <td class="col-lg-1">@Session["Year"].ToString()</td>
             <th class="col-lg-3" style="border: none"></th>
         </tr>
     </table>
 </body>
 
-<body>
-    <div>
-        <table class="table col-lg-12">
-            <tr>
-                <th class="col-lg-1" style="border: none">
-                    Maint ID
-                </th>
-                <th class="col-lg-3" style="border: none">
-                    Task Name
-                </th>
-                <th class="col-lg-1" style="border: none">
-                    Cost
-                </th>
-                <th class="col-lg-1" style="border: none">
-                    Select
-                </th>
-                <th class="col-lg-6" style="border: none">
-                </th>
-            </tr>
-        </table>
-    </div>
-</body>
-<body onload="makeTableScroll();">
-    <div class="scrollingTable">
-        <table id="myTable5" class="table col-lg-5" style="border: none">
-            @foreach (var item in Model)
-            {
+ 
+
+<div class="row" onload="makeTableScroll();">
+    <div class="table-responsive col-md-6">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td class="col-lg-1" style="text-align: center; vertical-align: middle;">
-                        @Html.DisplayFor(modelItem => item.MaintId)
-                    </td>
-                    <td class="col-lg-2">
-                        @Html.DisplayFor(modelItem => item.TaskName)
-                    </td>
-
-                    <td class="col-lg-1" style="text-align: right; vertical-align: middle;">
-                        @string.Format("{0:0.00}", Convert.ToDecimal(item.Cost))
-                        @*@string.Format("{0:c}", Convert.ToDecimal(item.Cost))*@
-
-                    </td>
-                    <td class="col-lg-1" style="text-align: center; vertical-align: middle;">
-                        <input type="checkbox" name="test" value="1" onclick="getRow(this)" />
-                    </td>
-
+                    <th class="col-lg-1" style="border: none">Maint ID</th>
+                    <th class="col-lg-3" style="border: none">Task Name</th>
+                    <th class="col-lg-1" style="border: none">Cost</th>
+                    <th class="col-lg-1" style="border: none">Select</th>
                 </tr>
-            }
-        </table>
-        <table id=" " class="table col-lg-7">
-        </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="col-lg-1" style="text-align: center; vertical-align: middle;">
+                            @Html.DisplayFor(modelItem => item.MaintId)
+                        </td>
+                        <td class="col-lg-3">
+                            @Html.DisplayFor(modelItem => item.TaskName)
+                        </td>
 
-    </div>
-</body>
-<body>
-    <div>
-        <table id="HeaderTable" class="table col-lg-12">
-            <tr>
-                <th class="col-lg-1" style="border:none"></th>
-                <th class="col-lg-1" style="border:none">Maint Id</th>
-                <th class="col-lg-2" style="border:none">Type</th>
-                <th class="col-lg-1" style="border:none">Cost</th>
-                <th class="col-lg-7" style="border: none"></th>
-            </tr>
-        </table>
-    </div>
-</body>
-<body>
-    <div>
-        <table id="MainTable" class="table col-lg-12">
-            @*<tr class="itemRow row-0 odd" id="cartItem_SCI-1">*@
-            @*<th class="col-lg-1" style="border:none"></th>*@
-            <tr>
-                <td class="col-lg-1" style="border: none;  "></td>
-                <td class="col-lg-1" style="border: none;  "></td>
-                <td class="col-lg-2" style="border: none;   "></td>
-                <td class=" col-lg-1" style="border: none;  "></td>
+                        <td class="col-lg-1" style="text-align: right; vertical-align: middle;">
+                            @string.Format("{0:0.00}", Convert.ToDecimal(item.Cost))
 
-                <th class="col-lg-7" style="border: none"></th>
-            </tr>
+                        </td>
+                        <td class="col-lg-1" style="text-align: center; vertical-align: middle;">
+                            <input type="checkbox" name="test" value="1" onclick="getRow(this)" />
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
-</body>
+
+    <div class="table-responsive col-md-6">
+        <table id="HeaderTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="col-lg-1" style="border:none"></th>
+                    <th class="col-lg-1" style="border:none">Maint Id</th>
+                    <th class="col-lg-2" style="border:none">Type</th>
+                    <th class="col-lg-1" style="border:none">Cost</th>
+                </tr>
+            </thead>
+            <tbody id="MainTable">
+                <tr class="">
+                    <td class="col-lg-1" style="border: none;"></td>
+                    <td class="col-lg-1" style="border: none;"></td>
+                    <td class="col-lg-3" style="border: none;"></td>
+                    <td class="col-lg-1" style="border: none;"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 <body>
     <div>
+
+ 
+
         <table id="TableFooter" class="table col-lg-12" style="border: none">
             <tr>
-                <th class="col-lg-3" style="border: none">
-                <td class="col-lg-1" style="border:none;text-align: right;">Total: $</td>
-                <td id="aTotal" class="col-lg-1 someTotalPrice" style="text-align: right; border:none"></td>
-                <td class="col-lg-7" style="border: none">
+                <th class="col-lg-9" style="border: none">
+                <td class="col-lg-1" style="border: none">
                     <input type="button" id="theButton" value="Create Ticket" onclick="proceed()" style="text-align: right; vertical-align: middle;   border: none" />
                 </td>
+                <td class="col-lg-1" style="border:none;text-align: right;">Total: $</td>
+                <td id="aTotal" class="col-lg-1 someTotalPrice" style="font-weight:bold; text-align: right; border:none"></td>
+
             </tr>
         </table>
     </div>
-</body>  
+</body>
