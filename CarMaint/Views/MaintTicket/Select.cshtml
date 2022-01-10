@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CarMaint.Models.CarData> 
+﻿@model IEnumerable<CarMaint.Models.CarData>
 
 @{
     ViewBag.Title = "SelectCust";
@@ -42,80 +42,63 @@
             }
         }
     </script>
-
 </head>
 
-
+<br>
 <body>
-
-    <br />
-    <table id="myTable2" class="table">
+    <table id="myTable2" class="">
         <tr>
-            <th width="150px">
-                Customer
-            </th> 
+            <th>Customer</th>
         <tr>
-            <td>
-                @Session["CustomerName"].ToString() 
+    </table>
+ 
+    <table id="myTable" class="table  col-lg-12 ">
+        <tr>
+            <td class="col-lg-3  ">
+                @Session["CustomerName"].ToString()
             </td>
-        </tr> 
+            
+            <th class="col-lg-11" style="border: none"></th>
+        </tr>
     </table>
 </body>
-
+<br>
 <body>
-
-    <br />
-    <table id="myTable2" class="table">
+    <table id="myTable2" class="   col-lg-12 " style="text-align:center">
         <tr>
-            @*<th width="150px">
-                CarId              
-            </th>*@
-            <th width="150px">
-                Manufacturer               
-            </th>
-            <th width="150px">
-                Model                
-            </th>
-            <th width="150px">
-                Engine Type              
-            </th>
-            <th width="150px">
-                Year              
-            </th>
-
-            <th width="150px">
-                Select Vehicle              
-            </th>
+            <th class="col-lg-2">Manufacturer</th>
+            <th class="col-lg-2">Model</th>
+            <th class="col-lg-2">Engine Type</th>
+            <th class="col-lg-1">Year</th>
+            <th class="col-lg-2">Select Vehicle</th>
+            <th class="col-lg-3" style=" border:none"></th>
         </tr>
     </table>
 </body>
 <body onload="makeTableScroll();">
     <div class="scrollingTable">
-        <table id="myTable" class="table">
+        <table id="myTable" class="table  col-lg-12 ">
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.CarId)
-                    </td>*@
-                    <td>
+                    <td class="col-lg-2">
                         @Html.DisplayFor(modelItem => item.Manufacturer)
                     </td>
-                    <td>
+                    <td class="col-lg-2">
                         @Html.DisplayFor(modelItem => item.Model)
                     </td>
-                    <td>
+                    <td class="col-lg-2">
                         @Html.DisplayFor(modelItem => item.EngineType)
                     </td>
-                    <td>
+                    <td class="col-lg-1">
                         @Html.DisplayFor(modelItem => item.Year)
                     </td>
-                    <td>
-                        @Html.ActionLink("Select Car", "SelectCar", new { engineType = item.EngineType, carId = item.CarId }) 
+                    <td class="col-lg-2">
+                        @Html.ActionLink("Select Car", "SelectCar", new { engineType = item.EngineType, carId = item.CarId })
                     </td>
+                    <th class="col-lg-3" style="border: none"></th>
                 </tr>
             }
-
         </table>
     </div>
 </body>
