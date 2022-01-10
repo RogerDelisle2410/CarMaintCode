@@ -38,9 +38,7 @@
             document.getElementById("MainTable").hidden = "hidden";
             document.getElementById("TableFooter").hidden = "hidden";
             document.getElementById("theButton").hidden = "hidden";
-        });
-         
-               
+        });   
              
         function makeTableScroll() { 
             
@@ -83,9 +81,7 @@
                 cell2.innerHTML = (cols[0].childNodes[0].nodeValue);
                 cell3.innerHTML = (cols[1].childNodes[0].nodeValue);
                 var num2 = (cols[2].childNodes[0].nodeValue);
-                cell4.innerHTML = parseFloat(num2).toFixed(2); 
-                 
-                
+                cell4.innerHTML = parseFloat(num2).toFixed(2);  
 
                 var sum = 0;
                 var dataTable = document.getElementById("MainTable");
@@ -139,7 +135,6 @@
         } 
 
         function proceed() {
-
             if (orderArray.length > 0) {
 
                 $.ajax({
@@ -168,7 +163,6 @@
         }
 
     </script>
-
 </head>
 <body>
     <table id="myTable1" class="table col-lg-12">
@@ -191,8 +185,6 @@
         </tr>
     </table>
 </body>
-
- 
 
 <div class="row" onload="makeTableScroll();">
     <div class="table-responsive col-md-6">
@@ -252,12 +244,8 @@
     </div>
 </div>
 
-
 <body>
-    <div>
-
- 
-
+    <div> 
         <table id="TableFooter" class="table col-lg-12" style="border: none">
             <tr>
                 <th class="col-lg-9" style="border: none">
