@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 01/05/2022 10:06:54
--- Generated from EDMX file: C:\Users\Roger\source\repos\CarMaint\CarMaint\Models\CarMaintModel.edmx
+-- Date Created: 02/14/2022 16:49:50
+-- Generated from EDMX file: C:\DevOpsRepo\CarMaint.git\CarMaint\Models\CarMaintModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [CarMaintenance];
+USE [bcatpdb2];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
