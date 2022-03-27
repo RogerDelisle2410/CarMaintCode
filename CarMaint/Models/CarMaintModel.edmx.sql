@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 02/14/2022 16:49:50
+-- Date Created: 03/27/2022 12:52:04
 -- Generated from EDMX file: C:\DevOpsRepo\CarMaint.git\CarMaint\Models\CarMaintModel.edmx
 -- --------------------------------------------------
 
